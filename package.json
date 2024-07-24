@@ -1,0 +1,12 @@
+{
+  "name": "beatrisbadia.com.br",
+  "version": "0.1.0",
+  "description": "Site profissional da Psicóloga Beatris Badia",
+  "author": "Guilherme Moraes",
+  "devDependencies": {
+    "tailwindcss": "^3.4.4"
+  },
+  "dependencies": {
+    "tailwind-hamburgers": "^1.3.5"
+  }
+}
