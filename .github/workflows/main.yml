@@ -1,20 +1,42 @@
+name: Deploy to Server
 on:
   push:
-    branches:
-      - main
-name: Deploy website on push
+    branches: [main]
+
 jobs:
-  web-deploy:
-    name: Deploy
+  deploy:
     runs-on: ubuntu-latest
     steps:
-      - name: Get latest code
-        uses: actions/checkout@v2
-
-      - name: Sync files
-        uses: SamKirkland/FTP-Deploy-Action@4.0.0
+      - uses: actions/checkout@v4
+      - name: Deploy to Server
+        uses: easingthemes/ssh-deploy@main
         with:
-          server: ${{ secrets.FTP_HOST }}
-          username: ${{ secrets.FTP_USER }}
-          password: ${{ secrets.FTP_PASSWORD }}
-          local-dir: src/
+          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+          REMOTE_HOST: ${{ secrets.REMOTE_HOST }}
+          REMOTE_PORT: ${{ secrets.REMOTE_PORT }}
+          REMOTE_USER: ${{ secrets.REMOTE_USER }}
+          TARGET: ${{ vars.TARGET }}
+          SOURCE: src/
+          ARGS: "-rlgoDzvc -i --delete"
+
+
+# on:
+#   push:
+#     branches:
+#       - main
+# name: Deploy website on push
+# jobs:
+#   web-deploy:
+#     name: Deploy
+#     runs-on: ubuntu-latest
+#     steps:
+#       - name: Get latest code
+#         uses: actions/checkout@v2
+
+#       - name: Sync files
+#         uses: SamKirkland/FTP-Deploy-Action@4.0.0
+#         with:
+#           server: ${{ secrets.FTP_HOST }}
+#           username: ${{ secrets.FTP_USER }}
+#           password: ${{ secrets.FTP_PASSWORD }}
+#           local-dir: src/
